@@ -4,7 +4,6 @@ from operator import attrgetter
 from typing import Iterator, NamedTuple
 
 FOLDER = r"D:\AI训练平台\点料项目\dianliao_count_val"
-# FOLDER = r"D:\datasets\location\train"
 MODEL_FOLDER = r"D:\AI训练平台\点料项目\dianliao_count_val"
 MODEL_NAMES = {
     's_model': 'dianliao-S.onnx',

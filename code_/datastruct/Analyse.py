@@ -12,21 +12,21 @@ from tqdm import tqdm
 
 from code_.dataset import CountingDataset
 from code_.obb_rectified import ONNXInfer
-from code_.utils import MaterialSize, Size2Config, is_date, MODEL_NAMES, MODEL_FOLDER
+from code_.utils import MaterialSize, Size2Config, is_date, MODEL_NAMES
 
 
 class TypeInfo(NamedTuple):
     type: tuple[MaterialSize, ...]
     models: list[Path]
 class Analyse:
-    def __init__(self, folder: Path, model_folder: Path,date: int | str | tuple[str, str] , latest_model: int, *,
+    def __init__(self, folder: Path,model_folder: Path, date: int | str | tuple[str, str] , latest_model: int, *,
                  constraint: float = 0.00):
 
         s_model_name: str = MODEL_NAMES['s_model']
         l_model_name: str = MODEL_NAMES['l_model']
 
         folder = Path(folder) # 将windows路径类型转化为字符串
-        model_folder = Path(model_folder)
+        # model_folder = Path(model_folder)
         self.dst_folder = folder / "result"
 
         self.latest_model = latest_model
@@ -188,16 +188,24 @@ class Analyse:
             for path, gt in tqdm(self.dataset, desc=f"Analysing model {name} on material {size}"):
 
                 if (pd := cache.get(path.stem)) is None:
-                    scaled_img = cv2.resize(cv2.imread(str(path)), None, fx=scale, fy=scale)
+                    scaled_img = cv2.resize(cv2.imdecode(np.fromfile(str(path), dtype=np.uint8), cv2.IMREAD_COLOR), None, fx=scale, fy=scale)
+
 
                     needs_write = True
                     predictions = model.predict(scaled_img)
                     cache[path.stem] = pd = len(predictions[0])
 
                     img_name = f"{path.stem}.png"
+                    # if pd != gt and not (scaled_folder / img_name).exists():
+                    #     cv2.imwrite(str(scaled_folder / img_name), scaled_img)
+                    #     cv2.imwrite(str(pred_folder / img_name), model.drawshow(scaled_img, predictions))
+                    #     shutil.copy(path, origin_folder / path.name)
+                    encode_params = [int(cv2.IMWRITE_PNG_COMPRESSION), 0]
                     if pd != gt and not (scaled_folder / img_name).exists():
-                        cv2.imwrite(str(scaled_folder / img_name), scaled_img)
-                        cv2.imwrite(str(pred_folder / img_name), model.drawshow(scaled_img, predictions))
+
+                        cv2.imencode('.png', scaled_img,encode_params)[1].tofile(str(scaled_folder / img_name))
+                        pred_img = model.drawshow(scaled_img, predictions)
+                        cv2.imencode('.png', pred_img,encode_params)[1].tofile(str(pred_folder / img_name))
                         shutil.copy(path, origin_folder / path.name)
 
                 arr.append(pd)

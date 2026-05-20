@@ -24,7 +24,7 @@ if __name__ == '__main__':
         model_num = int(input("请选择模型个数："))
         Analyse(
             folder = Path(utils.FOLDER),
-            model_folder=Path(utils.MODEL_FOLDER),
+            model_folder = Path(utils.MODEL_FOLDER),
             date = date_num,
             latest_model = model_num,
             constraint=0,)
@@ -44,7 +44,7 @@ if __name__ == '__main__':
         model_num = int(input("请选择模型个数："))
         Analyse(
             folder=Path(utils.FOLDER),
-            model_folder=Path(utils.MODEL_FOLDER),
+            model_folder = Path(utils.MODEL_FOLDER),
             date = (start_date,end_date),
             latest_model = model_num,
             constraint=0, )
