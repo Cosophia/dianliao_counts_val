@@ -297,7 +297,7 @@ class ONNXInfer:
         #
         self.input_shape = self.session_model.get_inputs()[0].shape[2:]
 
-        self.size2nms_thre = {'M': 0.65, 'S': 0.65, 'L_9000': 0.30, 'E': 0.25}
+        self.size2nms_thre = {'M': 0.65, 'S': 0.65, 'L': 0.30, 'E': 0.25}
 
     def set_size_category(self, ch: str) -> None:
         ch = ch.upper()

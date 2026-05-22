@@ -32,10 +32,14 @@ class CountingDataset:
         self.imgs: dict[Path, tuple[MaterialSize, int]] = {}
         # 获取图片信息
         for img in self.get_images(constraint, subfolders):
-            order,category, cnt = img.name.split('_')
-            cnts = cnt.split('.')[0]
-            self.imgs[img] = MaterialSize(category.upper()), int(cnts)
-
+            if img.name.count("_") == 2 :
+                order, category, cnt = img.name.split('_')
+                cnts = cnt.split('.')[0]
+                self.imgs[img] = MaterialSize(category.upper()), int(cnts)
+            elif img.name.count("_") == 3 :
+                order, category, cnt,same_ord = img.name.split('_')
+                cnts = cnt.split('.')[0]
+                self.imgs[img] = MaterialSize(category.upper()), int(cnts)
 
         self.data: dict[MaterialSize, list[tuple[Path, int]]] = defaultdict(list)
         for path, category, cnt in self:
