@@ -30,16 +30,24 @@ class CountingDataset:
 
         self._iter_type = None
         self.imgs: dict[Path, tuple[MaterialSize, int]] = {}
-        # 获取图片信息
+        # 获取图片信息(真实值由图片的名字信息获取)
+        # for img in self.get_images(constraint, subfolders):
+        #     if img.name.count("_") == 2 :
+        #         order, category, cnt = img.name.split('_')
+        #         cnts = cnt.split('.')[0]
+        #         self.imgs[img] = MaterialSize(category.upper()), int(cnts)
+        #     elif img.name.count("_") == 3 :
+        #         order, category, cnt,same_ord = img.name.split('_')
+        #         cnts = cnt.split('.')[0]
+        #         self.imgs[img] = MaterialSize(category.upper()), int(cnts)
+        #获取目录信息(真实值由目录的名字信息获取)
         for img in self.get_images(constraint, subfolders):
-            if img.name.count("_") == 2 :
-                order, category, cnt = img.name.split('_')
-                cnts = cnt.split('.')[0]
-                self.imgs[img] = MaterialSize(category.upper()), int(cnts)
-            elif img.name.count("_") == 3 :
-                order, category, cnt,same_ord = img.name.split('_')
-                cnts = cnt.split('.')[0]
-                self.imgs[img] = MaterialSize(category.upper()), int(cnts)
+            parent_dir_name = img.parent.name
+            # 解析目录名，格式为："类别__数量，如M_6488"
+            category, cnts = parent_dir_name.split('_')
+            self.imgs[img] = MaterialSize(category.upper()), int(cnts)
+
+
 
         self.data: dict[MaterialSize, list[tuple[Path, int]]] = defaultdict(list)
         for path, category, cnt in self:

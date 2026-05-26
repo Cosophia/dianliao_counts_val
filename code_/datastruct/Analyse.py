@@ -201,7 +201,7 @@ class Analyse:
                     #     cv2.imwrite(str(pred_folder / img_name), model.drawshow(scaled_img, predictions))
                     #     shutil.copy(path, origin_folder / path.name)
                     encode_params = [int(cv2.IMWRITE_PNG_COMPRESSION), 0]
-                    if pd != gt and not (scaled_folder / img_name).exists():
+                    if  pd != gt and not (scaled_folder / img_name).exists():
 
                         cv2.imencode('.png', scaled_img,encode_params)[1].tofile(str(scaled_folder / img_name))
                         pred_img = model.drawshow(scaled_img, predictions)
