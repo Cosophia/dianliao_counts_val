@@ -11,3 +11,21 @@ Here is the code of  Validation of the counting dianliao! Welcome to use and men
 * 在dataset.py中，通过img.name.count("_")获取文件名的"\_"个数，读取不同有规律的文件名。
 ### Version2.2 :修改了真实值的获取逻辑
 * 在dataset.py中，通过img.parent.name获取当前图片的父目录名称，而父目录名称包含真实值。
+### Version2.3 : 对项目文件进行规整
+  * code_<br>
+  ├── tools/<br>
+  │   ├── collect_material.py<br>
+  │   ├── fliter_json.py<br>
+  │   ├── playground.py<br>
+  │   ├── remove_json_ng_point.py<br>
+  │   ├── rename_folder.py<br>
+  │   └── snippet.py<br>
+  ├── main.py<br>
+  ├── dataset.py<br>
+  ├── obb_rectified.py<br>
+  ├── utils.py<br>
+  └── datastruct<br>
+  │   ├── __init__.py<br>
+  │   └───── Analyse.py
+
+  
