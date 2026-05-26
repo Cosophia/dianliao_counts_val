@@ -26,6 +26,5 @@ Here is the code of  Validation of the counting dianliao! Welcome to use and men
   ├── utils.py<br>
   └── datastruct<br>
   │   ├── __init__.py<br>
-  │   └───── Analyse.py
-
-  
+  │   └───── Analyse.py<br>
+由于collect_material，fliter_json，remove_json_ng_point，rename_folder，snippet，playground.py，并未使用，暂时放入tools文件夹中。
